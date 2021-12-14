@@ -3,8 +3,8 @@ import Book from "App/Models/Book"
 
 export default class BooksController {
   public async index() {
-    const books = await Book.query().preload("user")//.preload("forum");
-		// const books = await Book.all()
+    // const books = await Book.query().preload("user")//.preload("forum");
+		const books = await Book.all()
     return books;
   }
 
@@ -39,12 +39,13 @@ export default class BooksController {
   // }
 
   public async store({ auth, request }: HttpContextContract) {
-    const user = await auth.authenticate()
+    // const user = await auth.authenticate()
     const book = new Book()
     book.title = request.input("title")
     book.about = request.input("about")
     // book.forumId = request.input("forum");
-    await user.related("books").save(book);
+    // await user.related("books").save(book);
+		await book.save()
     return book;
   }
 

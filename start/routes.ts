@@ -24,14 +24,16 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.group(() => {
-  Route.post("register", "AuthController.register");
-  Route.post("login", "AuthController.login");
-  Route.group(() => {
-    Route.resource("books", "BooksController.index").apiOnly();
-    // Route.resource("forums", "ForumsController").apiOnly();
-    // Route.get("users/forums", "UsersController.forumsByUser");
-    // Route.get("users/posts", "UsersController.postsByUser");
-  }).middleware("auth:api");
-}).prefix("api");
-// Route.get('books', 'BooksController.index')
+// Route.group(() => {
+//   Route.post("register", "AuthController.register");
+//   Route.post("login", "AuthController.login");
+//   Route.group(() => {
+//     Route.resource("books", "BooksController.index").apiOnly();
+//     // Route.resource("forums", "ForumsController").apiOnly();
+//     // Route.get("users/forums", "UsersController.forumsByUser");
+//     // Route.get("users/posts", "UsersController.postsByUser");
+//   }).middleware("auth:api");
+// }).prefix("api");
+Route.get('books', 'BooksController.index')
+Route.get('books/:id', 'BooksController.show')
+Route.post('books', 'BooksController.store')

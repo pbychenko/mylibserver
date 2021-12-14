@@ -8,7 +8,7 @@ export default class Books extends BaseSchema {
       table.increments('id')
       table.string('title', 255).notNullable()
       table.string('about', 255).notNullable()
-      table.integer('user_id').notNullable()
+      table.integer('user_id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
