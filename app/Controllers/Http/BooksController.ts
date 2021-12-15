@@ -21,22 +21,22 @@ export default class BooksController {
     }
   }
 
-  // public async update({ auth, request, params }: HttpContextContract) {
-  //   const book = await Book.find(params.id);
+  public async update({ auth, request, params }: HttpContextContract) {
+    const book = await Book.find(params.id);
 
-  //   if (book) {
-  //     book.title = request.input("title");
-  //     book.about = request.input("content");
-  //     if (await book.save()) {
-  //       // await book.preload("user");
-  //       // await book.preload("forum");
-  //       return book;
-  //     }
-  //     return; // 422
-  //   }
+    if (book) {
+      book.title = request.input("title");
+      book.about = request.input("about");
+      if (await book.save()) {
+        // await book.preload("user");
+        // await book.preload("forum");
+        return book;
+      }
+      return; // 422
+    }
 
-  //   return; // 401
-  // }
+    return; // 401
+  }
 
   public async store({ auth, request }: HttpContextContract) {
     // const user = await auth.authenticate()
@@ -49,17 +49,24 @@ export default class BooksController {
     return book;
   }
 
-  // public async destroy({
-  //   response,
-  //   auth,
+  public async destroy({
+    response,
+    // auth,
+    params,
+  }: HttpContextContract) {
+    // const user = await auth.authenticate();
+    // const post = await Post.query()
+    //   .where("user_id", user.id)
+    //   .where("id", params.id)
+    //   .delete();
+    // return response.redirect("/dashboard");
+    const book = await Book.find(params.id);
+    if (book) {
+      book.delete()
+      return 'deleted';
+      // return; // 422
+    }
 
-  //   params,
-  // }: HttpContextContract) {
-  //   const user = await auth.authenticate();
-  //   const post = await Post.query()
-  //     .where("user_id", user.id)
-  //     .where("id", params.id)
-  //     .delete();
-  //   return response.redirect("/dashboard");
-  // }
+    return 'not found';
+  }
 }

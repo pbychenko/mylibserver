@@ -34,6 +34,16 @@ Route.get('/', async () => {
 //     // Route.get("users/posts", "UsersController.postsByUser");
 //   }).middleware("auth:api");
 // }).prefix("api");
-Route.get('books', 'BooksController.index')
-Route.get('books/:id', 'BooksController.show')
-Route.post('books', 'BooksController.store')
+// Route.get('books', 'BooksController.index')
+// Route.get('books/:id', 'BooksController.show')
+// Route.post('books', 'BooksController.store')
+// Route.patch('books/:id', 'BooksController.update')
+// Route.delete('books/:id', 'BooksController.destroy')
+
+
+Route
+  .group(() => {
+    Route.resource('books', 'BooksController')
+  })
+  .prefix('api')
+
