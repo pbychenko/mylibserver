@@ -18,10 +18,19 @@ export default class AuthController {
     newUser.email = email;
     newUser.password = password;
     newUser.fullName = fullName;
-    await newUser.save();
-    const token = await auth.use("api").login(newUser, {
-      expiresIn: "10 days",
-    });
-    return token.toJSON();
+
+    if (await newUser.save()) {
+      const token = await auth.use("api").login(newUser, {
+        expiresIn: "10 days",
+      });
+      return token.toJSON();
+    }
+
+    return 'cant';
+    // await newUser.save();
+    // const token = await auth.use("api").login(newUser, {
+    //   expiresIn: "10 days",
+    // });
+    // return token.toJSON();
   }
 }
