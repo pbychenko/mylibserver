@@ -41,20 +41,77 @@ Route.get('/', async () => {
 // Route.patch('books/:id', 'BooksController.update')
 // Route.delete('books/:id', 'BooksController.destroy')
 
+// Route
+//   .group(() => {
+//     Route.post("register", "AuthController.register");
+//     Route.post("login", "AuthController.login");
+//   })
+//   // .middleware('auth')
+//   .prefix('api')
+
+// Route
+//   .group(() => {
+//     // Route.post("register", "AuthController.register");
+//     // Route.post("login", "AuthController.login");
+//     Route.resource('books', 'BooksController')
+//   })
+//   .middleware('auth')
+//   .prefix('api')
+
+
 Route
   .group(() => {
     Route.post("register", "AuthController.register");
     Route.post("login", "AuthController.login");
   })
-  // .middleware('auth')
   .prefix('api')
+
+// Route.get('genres', 'GenresController.index').prefix('api')
+
+// Route
+//   .group(() => {
+//     Route.post('genres', 'GenresController.store')
+//     Route.patch('genres/:id', 'GenresController.update')
+//     Route.delete('genres/:id', 'GenresController.destroy')
+//   })
+//   .middleware('auth')
+//   .prefix('api')
 
 Route
   .group(() => {
-    // Route.post("register", "AuthController.register");
-    // Route.post("login", "AuthController.login");
-    Route.resource('books', 'BooksController')
-  })
-  .middleware('auth')
-  .prefix('api')
+    Route.get('users', 'GenresController.index')
+    Route
+      .group(() => {
+        Route.patch('users/:id', 'UsersController.update')
+      })
+    .middleware('auth')
 
+    Route.get('genres', 'GenresController.index')
+    Route
+      .group(() => {
+        Route.post('genres', 'GenresController.store')
+        Route.patch('genres/:id', 'GenresController.update')
+        Route.delete('genres/:id', 'GenresController.destroy')
+      })
+    .middleware('auth')
+
+    Route.get('authors', 'GenresController.index')
+    Route
+      .group(() => {
+        Route.post('authors', 'AuthorsController.store')
+        Route.patch('authors/:id', 'AuthorsController.update')
+        Route.delete('authors/:id', 'AuthorsController.destroy')
+      })
+    .middleware('auth')
+
+    Route.get('books', 'GenresController.index')
+    Route
+      .group(() => {
+        Route.post('books', 'BooksController.store')
+        Route.patch('books/:id', 'BooksController.update')
+        Route.delete('books/:id', 'BooksController.destroy')
+      })
+    .middleware('auth')
+  })
+  .prefix('api');
+  

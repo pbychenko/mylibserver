@@ -7,7 +7,7 @@ export default class Genre extends BaseModel {
   public id: number
 
   @column()
-  public name: string
+  public title: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
