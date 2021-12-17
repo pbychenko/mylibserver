@@ -95,7 +95,7 @@ Route
       })
     .middleware('auth')
 
-    Route.get('authors', 'GenresController.index')
+    Route.get('authors', 'AuthorsController.index')
     Route
       .group(() => {
         Route.post('authors', 'AuthorsController.store')
