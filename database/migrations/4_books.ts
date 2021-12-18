@@ -10,11 +10,6 @@ export default class Books extends BaseSchema {
       table.string('about', 255).notNullable()
       table.string('picture', 255)
       table
-        .integer('author_id')
-        .unsigned().notNullable()
-        .references('users.id')
-        .onDelete('CASCADE')
-      table
         .integer('owner_id')
         .unsigned().notNullable()
         .references('users.id')
@@ -23,10 +18,6 @@ export default class Books extends BaseSchema {
         .integer('holder_id')
         .unsigned()
         .references('users.id')
-      table
-      .integer('genre_id')
-      .unsigned()
-        .references('genres.id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

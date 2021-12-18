@@ -17,16 +17,10 @@ export default class Book extends BaseModel {
   public picture: string
 
   @column()
-  public author_id: number
-
-  @column()
   public holder_id: number
 
   @column()
   public owner_id: number
-
-  @column()
-  public genre_id: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -41,8 +35,8 @@ export default class Book extends BaseModel {
   @belongsTo(() => User)
   public holder: BelongsTo<typeof User>
 
-  @belongsTo(() => User)
-  public author: BelongsTo<typeof User>
+  @manyToMany(() => User)
+  public author: ManyToMany<typeof User>
 
   @manyToMany(() => Genre)
   public genres: ManyToMany<typeof Genre>

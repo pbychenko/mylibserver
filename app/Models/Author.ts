@@ -1,7 +1,6 @@
 import { DateTime } from 'luxon'
 import Book from "App/Models/Book"
-import { column, BaseModel, hasMany,
-  HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, BaseModel, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Author extends BaseModel {
   @column({ isPrimary: true })
@@ -19,6 +18,6 @@ export default class Author extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasMany(() => Book)
-  public books: HasMany<typeof Book>
+  @manyToMany(() => Book)
+  public books: ManyToMany<typeof Book>
 }
