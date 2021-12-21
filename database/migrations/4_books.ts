@@ -13,10 +13,9 @@ export default class Books extends BaseSchema {
         .integer('owner_id')
         .unsigned().notNullable()
         .references('users.id')
-        .onDelete('CASCADE')
+        // .onDelete('CASCADE')
       table
         .integer('holder_id')
-        .unsigned()
         .references('users.id')
 
       /**

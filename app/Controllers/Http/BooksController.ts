@@ -39,13 +39,18 @@ export default class BooksController {
   }
 
   public async store({ auth, request }: HttpContextContract) {
-    // const user = await auth.authenticate()
-    const book = new Book()
-    book.title = request.input("title")
-    book.about = request.input("about")
+    const user = await auth.authenticate()
+    const book = await Book.create({
+			title: request.input("title"),
+			about: request.input("about"),
+      picture: '',//реальная линка на картину
+      ownerId: user.id,
+      holderId: undefined,
+		})
     // book.forumId = request.input("forum");
-    // await user.related("books").save(book);
-		await book.save()
+    await user.related("books").save(book);
+		// await book.save()
+    console.log(book.owner)
     return book;
   }
 

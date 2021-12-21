@@ -17,10 +17,10 @@ export default class Book extends BaseModel {
   public picture: string
 
   @column()
-  public holder_id: number
+  public ownerId: number
 
   @column()
-  public owner_id: number
+  public holderId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -26,7 +26,9 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasMany(() => Book)
+  @hasMany(() => Book, {
+    foreignKey: 'ownerId', // defaults to userId
+  })
   public books: HasMany<typeof Book>;
 
   @beforeSave()
