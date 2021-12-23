@@ -29,7 +29,9 @@ export default class Book extends BaseModel {
   public updatedAt: DateTime
 
    // Relationship
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'ownerId', // defaults to userId
+  })
   public owner: BelongsTo<typeof User>
 
   @belongsTo(() => User)

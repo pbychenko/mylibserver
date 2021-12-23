@@ -1,5 +1,6 @@
 import { HttpContextContract } from "@ioc:Adonis/Core/HttpContext"
 import Book from "App/Models/Book"
+import User from "App/Models/User"
 
 export default class BooksController {
   public async index() {
@@ -39,18 +40,27 @@ export default class BooksController {
   }
 
   public async store({ auth, request }: HttpContextContract) {
-    const user = await auth.authenticate()
-    const book = await Book.create({
-			title: request.input("title"),
-			about: request.input("about"),
-      picture: '',//реальная линка на картину
-      ownerId: user.id,
-      holderId: undefined,
-		})
-    // book.forumId = request.input("forum");
-    await user.related("books").save(book);
+    // const user = await auth.authenticate()
+    // const book = await Book.create({
+		// 	title: request.input("title"),
+		// 	about: request.input("about"),
+    //   picture: '',//реальная линка на картину
+    //   ownerId: user.id,
+    //   holderId: undefined,
+		// })
+    // await user.related("books").save(book);
 		// await book.save()
-    console.log(book.owner)
+    // console.log(user.email)
+  //   const books = await Book
+  // .query()
+  // .preload('owner')
+  // books.forEach((book) => {
+  //   console.log(book.owner.email)
+  // })
+  const book = await Book.find(1);
+  const user = await book.related('owner').query()
+  console.log(user)
+
     return book;
   }
 

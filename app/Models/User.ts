@@ -27,7 +27,7 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @hasMany(() => Book, {
-    foreignKey: 'ownerId', // defaults to userId
+    foreignKey: 'ownerId',
   })
   public books: HasMany<typeof Book>;
 
