@@ -59,6 +59,10 @@ export default class BooksController {
   // })
   const book = await Book.find(1);
   const user = await book.related('owner').query()
+  const genre = await book.related('genres').create({
+    title: 'This is a great post'
+  })
+
   console.log(user)
 
     return book;

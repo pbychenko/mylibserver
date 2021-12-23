@@ -38,7 +38,7 @@ export default class Book extends BaseModel {
   public holder: BelongsTo<typeof User>
 
   @manyToMany(() => User)
-  public author: ManyToMany<typeof User>
+  public authors: ManyToMany<typeof User>
 
   @manyToMany(() => Genre)
   public genres: ManyToMany<typeof Genre>
