@@ -1,20 +1,18 @@
 import { HttpContextContract } from "@ioc:Adonis/Core/HttpContext"
 import Book from "App/Models/Book"
-import User from "App/Models/User"
 
 export default class BooksController {
-  public async index() {
-    // const books = await Book.query().preload("user")//.preload("forum");
+  public async index() {    
+    // const books = await Book.query().where('ownerId', ownerId).andWhere('holderId', holderId)   
+
 		const books = await Book.all()
     return books;
   }
 
-  public async show({ request, params }: HttpContextContract) {
+  public async show({ params }: HttpContextContract) {
     try {
       const book = await Book.find(params.id);
       if (book) {
-        // await book.preload("user");
-        // await book.preload("forum");
         return book;
       }
     } catch (error) {
@@ -23,67 +21,56 @@ export default class BooksController {
   }
 
   public async update({ auth, request, params }: HttpContextContract) {
+    const user = await auth.authenticate();
     const book = await Book.find(params.id);
-
     if (book) {
-      book.title = request.input("title");
-      book.about = request.input("about");
-      if (await book.save()) {
-        // await book.preload("user");
-        // await book.preload("forum");
-        return book;
+      const owner = (await book?.related('owner').query())[0]
+      if (user.id === owner.id) {
+        try {
+          await book.merge({ ...request.body() }).save();
+          return book;
+        } catch (e) {
+          // console.log(e);
+          return e.message;
+        }
+      } else {
+        return 'only owner can edit book'
       }
-      return; // 422
     }
-
-    return; // 401
+    return 'not found'
   }
 
   public async store({ auth, request }: HttpContextContract) {
-    // const user = await auth.authenticate()
-    // const book = await Book.create({
-		// 	title: request.input("title"),
-		// 	about: request.input("about"),
-    //   picture: '',//реальная линка на картину
-    //   ownerId: user.id,
-    //   holderId: undefined,
-		// })
-    // await user.related("books").save(book);
-		// await book.save()
-    // console.log(user.email)
-  //   const books = await Book
-  // .query()
-  // .preload('owner')
-  // books.forEach((book) => {
-  //   console.log(book.owner.email)
+    const user = await auth.authenticate()
+    const book = await Book.create({
+			title: request.input("title"),
+			about: request.input("about"),
+      picture: '',//реальная линка на картину
+      ownerId: user.id,
+      genreId: request.input("genreId"),
+		});
+    const authorId = request.input("authorId")
+    await book.related('authors').attach([authorId])
+
+  //  await book.related('authors').create({
+  //   name: 'n',
+  //   lastName: 'l',
   // })
-  const book = await Book.find(1);
-  const user = await book.related('owner').query()
-  const genre = await book.related('genres').create({
-    title: 'This is a great post'
-  })
-
-  console.log(user)
-
     return book;
   }
 
-  public async destroy({
-    response,
-    // auth,
-    params,
-  }: HttpContextContract) {
-    // const user = await auth.authenticate();
-    // const post = await Post.query()
-    //   .where("user_id", user.id)
-    //   .where("id", params.id)
-    //   .delete();
-    // return response.redirect("/dashboard");
+  public async destroy({ auth, params }: HttpContextContract) {
+    const user = await auth.authenticate();
+    console.log()
+
     const book = await Book.find(params.id);
     if (book) {
-      book.delete()
-      return 'deleted';
-      // return; // 422
+      const owner = (await book?.related('owner').query())[0]
+      if (user.id === owner.id) {
+        await book.delete()
+        return 'book has been deleted';
+      } 
+      return 'only owner can delete book';      
     }
 
     return 'not found';

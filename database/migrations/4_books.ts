@@ -17,6 +17,9 @@ export default class Books extends BaseSchema {
       table
         .integer('holder_id')
         .references('users.id')
+      table
+        .integer('genre_id')
+        .references('genres.id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

@@ -29,7 +29,12 @@ export default class User extends BaseModel {
   @hasMany(() => Book, {
     foreignKey: 'ownerId',
   })
-  public books: HasMany<typeof Book>;
+  public ownerBooks: HasMany<typeof Book>;
+
+  @hasMany(() => Book, {
+    foreignKey: 'holderId',
+  })
+  public holderBooks: HasMany<typeof Book>;
 
   @beforeSave()
   public static async hashPassword (user: User) {

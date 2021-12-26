@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import Author from "App/Models/Author"
 import User from "App/Models/User"
 import Genre from "App/Models/Genre"
 import { BaseModel, column, BelongsTo, belongsTo, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
@@ -22,6 +23,9 @@ export default class Book extends BaseModel {
   @column()
   public holderId: number
 
+  @column()
+  public genreId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -30,16 +34,22 @@ export default class Book extends BaseModel {
 
    // Relationship
   @belongsTo(() => User, {
-    foreignKey: 'ownerId', // defaults to userId
+    foreignKey: 'ownerId',
   })
   public owner: BelongsTo<typeof User>
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'holderId',
+  })
   public holder: BelongsTo<typeof User>
 
-  @manyToMany(() => User)
-  public authors: ManyToMany<typeof User>
+  @belongsTo(() => Genre, {
+    foreignKey: 'genreId',
+  })
+  public genre: BelongsTo<typeof Genre>
 
-  @manyToMany(() => Genre)
-  public genres: ManyToMany<typeof Genre>
+  @manyToMany(() => Author, {
+    // pivotTimestamps: true
+  })
+  public authors: ManyToMany<typeof Author>  
 }

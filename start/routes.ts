@@ -79,7 +79,8 @@ Route
 
 Route
   .group(() => {
-    Route.get('users', 'GenresController.index')
+    Route.get('users', 'UsersController.index')
+    Route.get('users/:id/books', 'UsersController.books')
     Route
       .group(() => {
         Route.patch('users/:id', 'UsersController.update')
@@ -96,6 +97,7 @@ Route
     .middleware('auth')
 
     Route.get('authors', 'AuthorsController.index')
+    // Route.get('authors/:id/books', 'AuthorsController.index')
     Route
       .group(() => {
         Route.post('authors', 'AuthorsController.store')
@@ -104,7 +106,8 @@ Route
       })
     .middleware('auth')
 
-    Route.get('books', 'GenresController.index')
+    Route.get('books', 'BooksController.index')
+    Route.get('books/:id', 'BooksController.show')
     Route
       .group(() => {
         Route.post('books', 'BooksController.store')
@@ -115,5 +118,5 @@ Route
   })
   .prefix('api');
   
-  //u1 token MQ.S2Zsp0cDih4lxUEQlooyZ75S5XPXPnoIDwLnfcd3iz6QDd9XY33gJDDszLx4
-  //u2 token Mg.O5yFLOCwcuGhfrixu9mUQhmo3-es5P3YxMplAoxrPNLv2yzPpIqF9JaiGz63
+  //u1 token MQ.RL_s0JSKN9Ov7j4CS7k01zkx98_mp648B0tRfS8hxsodz-CXgtWWa3DOHbFO
+  //u2 token Mg.zQU257OMUJKNWZBC6eDQat20vtDDvfJNPlnLNLQqmM-RtWZLj_TyoSwArJJn
