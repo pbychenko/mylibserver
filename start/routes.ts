@@ -88,19 +88,21 @@ Route
     .middleware('auth')
 
     Route.get('genres', 'GenresController.index')
+    Route.post('genres', 'GenresController.store')
     Route
       .group(() => {
-        Route.post('genres', 'GenresController.store')
+        // Route.post('genres', 'GenresController.store')
         Route.patch('genres/:id', 'GenresController.update')
         Route.delete('genres/:id', 'GenresController.destroy')
       })
     .middleware('auth')
 
     Route.get('authors', 'AuthorsController.index')
+    Route.post('authors', 'AuthorsController.store')
     // Route.get('authors/:id/books', 'AuthorsController.index')
     Route
       .group(() => {
-        Route.post('authors', 'AuthorsController.store')
+        // Route.post('authors', 'AuthorsController.store')
         Route.patch('authors/:id', 'AuthorsController.update')
         Route.delete('authors/:id', 'AuthorsController.destroy')
       })
@@ -108,15 +110,13 @@ Route
 
     Route.get('books', 'BooksController.index')
     Route.get('books/:id', 'BooksController.show')
+    Route.post('books', 'BooksController.store')
     Route
       .group(() => {
-        Route.post('books', 'BooksController.store')
+        // Route.post('books', 'BooksController.store')
         Route.patch('books/:id', 'BooksController.update')
         Route.delete('books/:id', 'BooksController.destroy')
       })
     .middleware('auth')
   })
   .prefix('api');
-  
-  //u1 token MQ.RL_s0JSKN9Ov7j4CS7k01zkx98_mp648B0tRfS8hxsodz-CXgtWWa3DOHbFO
-  //u2 token Mg.zQU257OMUJKNWZBC6eDQat20vtDDvfJNPlnLNLQqmM-RtWZLj_TyoSwArJJn

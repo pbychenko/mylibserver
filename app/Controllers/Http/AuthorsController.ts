@@ -3,8 +3,14 @@ import Author from "App/Models/Author";
 
 export default class AuthorsController {
 	public async index() {
-		const authors = Author.all();
-    return authors;
+		const authors = (await Author.all());
+		// console.log('data',data)
+		// const authors = data.map((el) => {
+		// 	// console.log(el);
+		// 	return el.lastName;
+		// })
+		return authors;
+    // return await authors.map(el => {...el });
   }
 
   public async update({ request, params }: HttpContextContract) {

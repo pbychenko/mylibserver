@@ -25,7 +25,7 @@ export default class GenresController {
     const genre = new Genre();
     genre.title = request.input("title")
 		await genre.save()
-    return genre;
+    return genre.id;
   }
 
   public async destroy({ params }: HttpContextContract) {
