@@ -114,19 +114,19 @@ export default class BooksController {
   }
 
   public async destroy({ auth, params }: HttpContextContract) {
-    const user = await auth.authenticate();
+    const user = await auth.authenticate()
     console.log()
 
-    const book = await Book.find(params.id);
+    const book = await Book.find(params.id)
     if (book) {
       const owner = (await book?.related('owner').query())[0]
       if (user.id === owner.id) {
         await book.delete()
-        return 'book has been deleted';
-      } 
-      return 'only owner can delete book';      
+        return 'book has been deleted'
+      }
+      return 'only owner can delete book'
     }
 
-    return 'not found';
+    return 'not found'
   }
 }
