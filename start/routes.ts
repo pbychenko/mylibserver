@@ -91,10 +91,10 @@ Route
     .middleware('auth')
 
     Route.get('genres', 'GenresController.index')
-    Route.post('genres', 'GenresController.store')
+    // Route.post('genres', 'GenresController.store')
     Route
       .group(() => {
-        // Route.post('genres', 'GenresController.store')
+        Route.post('genres', 'GenresController.store')
         Route.patch('genres/:id', 'GenresController.update')
         Route.delete('genres/:id', 'GenresController.destroy')
       })
