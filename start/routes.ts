@@ -62,9 +62,18 @@ Route.get('/', async () => {
 Route
   .group(() => {
     Route.post("register", "AuthController.register");
-    Route.post("login", "AuthController.login");
+    Route.post("login", "AuthController.login")
+    Route
+      .group(() => {
+        Route.get('profile', 'AuthController.profile')
+      })
+    .middleware('auth')
+    
   })
   .prefix('api')
+
+  // MjY.KRP8uwaMouF9xNLtw0CcEdX8SE7vcZj71uJ4ybmOC5B9-HHUFhTyJZbS_nhP u1
+  // Mjc.Z0yU1Ev80UTaL1cp9bf0pxQUQGfAL0UUN-Yg1kOxofHIo4ewj831EiQ2Te7H u2
 
 // Route.get('genres', 'GenresController.index').prefix('api')
 

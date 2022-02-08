@@ -7,12 +7,17 @@ export default class AuthController {
     const password = request.input('password')
     try {
       const token = await auth.use('api').attempt(email, password)
-      console.log(token.toJSON())
+      // console.log(token.toJSON())
       return token
     } catch {
       return response.badRequest('Invalid credentials')
     }
   }
+
+  public async profile({ auth }: HttpContextContract) {
+    const user = await auth.authenticate();
+    return user
+  } 
 
   // public async register({ request, auth }: HttpContextContract) {
   //   const email = request.input("email");

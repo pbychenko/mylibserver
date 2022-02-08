@@ -8,7 +8,7 @@ export default class BooksController {
     // const books = await Database.rawQuery('select title, about, author.last_name from books, authors where id = ?', [1])
 
     const { authorId, genreId } = request.qs()
-    console.log(authorId)
+    // console.log(authorId)
 		const books = await Book.all()
     
     const data = await Promise.all(books.map(async (book) => {
@@ -30,7 +30,7 @@ export default class BooksController {
     }
     ))
 
-    console.log(data)
+    // console.log(data)
     // return books;
     return data.filter(e => e !== null);
 
@@ -80,7 +80,7 @@ export default class BooksController {
     if (Array.isArray(authorsIds)) {
       const f = async (list) => {
         for (const item of list) {
-          console.log('item', item)
+          // console.log('item', item)
           await book.related('authors').attach([item])
         }
       }
