@@ -10,30 +10,13 @@ export default class BooksController {
     const { authorId, genreId } = request.qs()
     console.log('authorId', authorId)
     console.log('genreId', genreId)
-		// const books = await Book.all()
-    
-    // const filteredByGenre = await Promise.all(books.map(async (book) => {
-    // // const data = await Promise.all(books.filter(async (book) => {
-    //   // const authors = await book.related('authors').query();
-    //   const genre = (await book.related('genre').query())[0]
-    //   // console.log('genre', typeof genre.id )
-    //   // const authorIds = authors.map(author => author.id)
-    //   // return ((authorId !=='undefined' && authorIds.includes(+authorId)) || authorId === 'undefined' )
-    //   // console.log(authorId === 'undefined')
-    //   if ((genreId !=='' && genre.id === +genreId) || genreId === '' ) {
-    //     // console.log(authorId === undefined)
-    //     return book
-    //   }
-    //   return null;
-    // }
-    // ))
 
     let results = await Book.all()
     if (genreId !== '') {
       results = await Book.query().where('genre_id', +genreId)
     }
     
-    console.log('filteredByGenre', results.map(e=>e.title))
+    // console.log('filteredByGenre', results.map(e=>e.title))
 
     results = await Promise.all(results.map(async (book) => {
         const authors = await book.related('authors').query()
@@ -46,7 +29,7 @@ export default class BooksController {
             authorIds,
           }
         }
-        return null;
+        return null
       }
     ))
 
