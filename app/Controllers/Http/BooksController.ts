@@ -3,37 +3,56 @@ import Book from "App/Models/Book"
 // import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class BooksController {
-  public async index({ request }) {    
+  public async index({ request }) {
     // const books = await Book.query().where('ownerId', ownerId).andWhere('holderId', holderId)   
     // const books = await Database.rawQuery('select title, about, author.last_name from books, authors where id = ?', [1])
 
     const { authorId, genreId } = request.qs()
-    // console.log(authorId)
-		const books = await Book.all()
+    console.log('authorId', authorId)
+    console.log('genreId', genreId)
+		// const books = await Book.all()
     
-    const data = await Promise.all(books.map(async (book) => {
-    // const data = await Promise.all(books.filter(async (book) => {  
-      const authors = await book.related('authors').query();
-      const authorIds = authors.map(author => author.id)
-      // return ((authorId !=='undefined' && authorIds.includes(+authorId)) || authorId === 'undefined' )
-      // console.log(authorId === 'undefined')
-      if ((authorId !=='undefined' && authorIds.includes(+authorId)) || authorId === 'undefined' || authorId === 'all' ) {
-        // console.log(authorId === undefined)
-        return {
-          id: book.id,
-          title: book.title,
-          about: book.about,
-          authorIds,
-        }        
-      }
-      return null;      
+    // const filteredByGenre = await Promise.all(books.map(async (book) => {
+    // // const data = await Promise.all(books.filter(async (book) => {
+    //   // const authors = await book.related('authors').query();
+    //   const genre = (await book.related('genre').query())[0]
+    //   // console.log('genre', typeof genre.id )
+    //   // const authorIds = authors.map(author => author.id)
+    //   // return ((authorId !=='undefined' && authorIds.includes(+authorId)) || authorId === 'undefined' )
+    //   // console.log(authorId === 'undefined')
+    //   if ((genreId !=='' && genre.id === +genreId) || genreId === '' ) {
+    //     // console.log(authorId === undefined)
+    //     return book
+    //   }
+    //   return null;
+    // }
+    // ))
+
+    let results = await Book.all()
+    if (genreId !== '') {
+      results = await Book.query().where('genre_id', +genreId)
     }
+    
+    console.log('filteredByGenre', results.map(e=>e.title))
+
+    results = await Promise.all(results.map(async (book) => {
+        const authors = await book.related('authors').query()
+        const authorIds = authors.map(author => author.id)
+        if ((authorId !=='' && authorIds.includes(+authorId)) || authorId === '') {
+          return {
+            id: book.id,
+            title: book.title,
+            about: book.about,
+            authorIds,
+          }
+        }
+        return null;
+      }
     ))
 
     // console.log(data)
     // return books;
-    return data.filter(e => e !== null);
-
+    return results.filter(e => e !== null)
   }
 
   public async show({ params }: HttpContextContract) {
@@ -72,10 +91,11 @@ export default class BooksController {
     const book = await Book.create({
 			title: request.input("title"),
 			about: request.input("about"),
-      picture: '',//реальная линка на картину
+      picture: '', //реальная линка на картину
       ownerId: 2,
       genreId: request.input("genreId"),
 		});
+
     const authorsIds = request.input("authorIds")
     if (Array.isArray(authorsIds)) {
       const f = async (list) => {
