@@ -19,22 +19,22 @@ export default class AuthController {
     return user
   } 
 
-  // public async register({ request, auth }: HttpContextContract) {
-  //   const email = request.input("email");
-  //   const password = request.input("password");
-  //   const fullName = request.input("name");
-  //   const newUser = new User()
-  //   newUser.email = email
-  //   newUser.password = password
-  //   newUser.fullName = fullName
+  public async register({ request, auth }: HttpContextContract) {
+    const email = request.input("email");
+    const password = request.input("password");
+    const fullName = request.input("name");
+    const newUser = new User()
+    newUser.email = email
+    newUser.password = password
+    newUser.fullName = fullName
 
-  //   if (await newUser.save()) {
-  //     const token = await auth.use("api").login(newUser, {
-  //       expiresIn: "10 days",
-  //     });
-  //     return token.toJSON()
-  //   }
+    if (await newUser.save()) {
+      const token = await auth.use("api").login(newUser, {
+        expiresIn: "10 days",
+      });
+      return token.toJSON()
+    }
 
-  //   return 'cant'
-  // }
+    return 'cant'
+  }
 }
