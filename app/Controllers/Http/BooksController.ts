@@ -26,6 +26,7 @@ export default class BooksController {
             id: book.id,
             title: book.title,
             about: book.about,
+            holderId: book.holderId,
             authorIds,
           }
         }
@@ -50,11 +51,11 @@ export default class BooksController {
   }
 
   public async update({ auth, request, params }: HttpContextContract) {
-    const user = await auth.authenticate();
+    // const user = await auth.authenticate();
     const book = await Book.find(params.id);
     if (book) {
-      const owner = (await book?.related('owner').query())[0]
-      if (user.id === owner.id) {
+      // const owner = (await book?.related('owner').query())[0]
+      // if (user.id === owner.id) {
         try {
           await book.merge({ ...request.body() }).save();
           return book;
@@ -62,20 +63,20 @@ export default class BooksController {
           // console.log(e);
           return e.message;
         }
-      } else {
-        return 'only owner can edit book'
-      }
+      // } else {
+      //   return 'only owner can edit book'
+      // }
     }
     return 'not found'
   }
 
   public async store({ auth, request }: HttpContextContract) {
-    // const user = await auth.authenticate()
+    const user = await auth.authenticate()
     const book = await Book.create({
 			title: request.input("title"),
 			about: request.input("about"),
       picture: '', //реальная линка на картину
-      ownerId: 2,
+      ownerId: user.id,
       genreId: request.input("genreId"),
 		});
 

@@ -122,10 +122,10 @@ Route
 
     Route.get('books', 'BooksController.index')
     Route.get('books/:id', 'BooksController.show')
-    Route.post('books', 'BooksController.store')
+    // Route.post('books', 'BooksController.store')
     Route
       .group(() => {
-        // Route.post('books', 'BooksController.store')
+        Route.post('books', 'BooksController.store')
         Route.patch('books/:id', 'BooksController.update')
         Route.delete('books/:id', 'BooksController.destroy')
       })
