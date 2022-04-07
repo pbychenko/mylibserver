@@ -2,6 +2,9 @@
   "name": "mylibserver",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
