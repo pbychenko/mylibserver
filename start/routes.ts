@@ -88,7 +88,7 @@ Route
 
 Route
   .group(() => {
-    Route.get('users', 'UsersController.index')  
+    Route.get('users', 'UsersController.index')
     Route.get('users/:id/books', 'UsersController.books')
     Route.get('users/:id', 'UsersController.show')
     Route
