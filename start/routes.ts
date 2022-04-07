@@ -110,11 +110,10 @@ Route
     .middleware('auth')
 
     Route.get('authors', 'AuthorsController.index')
-    Route.post('authors', 'AuthorsController.store')
     // Route.get('authors/:id/books', 'AuthorsController.index')
     Route
       .group(() => {
-        // Route.post('authors', 'AuthorsController.store')
+        Route.post('authors', 'AuthorsController.store')
         Route.patch('authors/:id', 'AuthorsController.update')
         Route.delete('authors/:id', 'AuthorsController.destroy')
       })
