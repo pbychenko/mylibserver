@@ -1,2 +1,2 @@
 release: node build/ace migration:run --force
-web: node build/server.js tets
+web: node build/server.js
