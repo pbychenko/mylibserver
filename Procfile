@@ -1,3 +1,3 @@
-web: node build/server.js
+web: npm start
 release: node build/ace migration:run --force
 
