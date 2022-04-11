@@ -1,40 +1,40 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import Genre from "App/Models/Genre";
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Genre from 'App/Models/Genre'
 
 export default class GenresController {
-	public async index() {
-		const genres = Genre.all();
-    return genres;
+  public async index() {
+    const genres = Genre.query()
+    return genres
   }
 
   public async update({ request, params }: HttpContextContract) {
-    const genre = await Genre.find(params.id);
+    const genre = await Genre.find(params.id)
 
     if (genre) {
-      genre.title = request.input("title");
+      genre.title = request.input('title')
       if (await genre.save()) {
-        return genre;
+        return genre
       }
-      return 404;
+      return 404
     }
 
-    return 401;
+    return 401
   }
 
   public async store({ request }: HttpContextContract) {
-    const genre = new Genre();
-    genre.title = request.input("title")
-		await genre.save()
-    return genre.id;
+    const genre = new Genre()
+    genre.title = request.input('title')
+    await genre.save()
+    return genre.id
   }
 
   public async destroy({ params }: HttpContextContract) {
-    const genre = await Genre.find(params.id);
+    const genre = await Genre.find(params.id)
     if (genre) {
       genre.delete()
-      return 'deleted';
+      return 'deleted'
     }
 
-    return 'not found';
+    return 'not found'
   }
 }

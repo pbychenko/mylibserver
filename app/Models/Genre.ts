@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import Book from "App/Models/Book"
-import { column,  BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import Book from 'App/Models/Book'
+import { column, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Genre extends BaseModel {
   @column({ isPrimary: true })
@@ -18,5 +18,5 @@ export default class Genre extends BaseModel {
   @hasMany(() => Book, {
     foreignKey: 'genreId',
   })
-  public ownerBooks: HasMany<typeof Book>;
+  public ownerBooks: HasMany<typeof Book>
 }
